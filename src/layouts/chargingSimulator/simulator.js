@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import { ethers } from "ethers";
-import {masteraddress,masterABI,clientContract} from '../../assets/keys/master';
-import {REACT_APP_NODE_ENDPOINT,REACT_APP_NODE_USERNAME,REACT_APP_NODE_PASSWORD} from '../../assets/keys/nodeRPC';
+// import {masteraddress,masterABI,clientContract} from '../../assets/keys/master';
+// import {REACT_APP_NODE_ENDPOINT,REACT_APP_NODE_USERNAME,REACT_APP_NODE_PASSWORD} from '../../assets/keys/nodeRPC';
 import axios from 'axios'
 import { Line } from 'rc-progress';
 import './simulator.css';
@@ -38,148 +38,149 @@ const Simulator=()=>{
     const [currentChargeLevel, setCurrentChargeLevel] = useState(null);
     const [valueChargeLimit, setValueChargeLimit] = useState("");
 
-    useEffect(() => {
-        (async()=>{                        
-                // const provider =new ethers.providers.Web3Provider(window.ethereum)             
-                let provider = new ethers.providers.JsonRpcProvider({
-                    url: REACT_APP_NODE_ENDPOINT,
-                    user: REACT_APP_NODE_USERNAME,
-                    password: REACT_APP_NODE_PASSWORD,                    
-                }); 
-                const contract =await new ethers.Contract(window.sessionStorage.getItem("cAddress"), clientContract, provider); 
-                const data=await contract.getSpecificCharger1(window.sessionStorage.getItem("cIndex")).then((res)=>{  
-                    // console.log(res);    
-                    setContData(res);                
-                })  
-                const details=await contract.getDetails().then((res)=>{
-                    setMId(res[3]);
-                })  
-                const contract2 =await new ethers.Contract(masteraddress, masterABI, provider); 
-                const data2=await contract2.viewUser(window.sessionStorage.getItem("userID")).then((res)=>{
-                    // console.log(res)
-                    if(res[1]==="0x0000000000000000000000000000000000000000"){
-                        setWalletData(res);
-                    }else{                        
-                        setWalletData(res);
+    // useEffect(() => {
+    //     (async()=>{                        
+    //             // const provider =new ethers.providers.Web3Provider(window.ethereum)             
+    //             let provider = new ethers.providers.JsonRpcProvider({
+    //                 url: REACT_APP_NODE_ENDPOINT,
+    //                 user: REACT_APP_NODE_USERNAME,
+    //                 password: REACT_APP_NODE_PASSWORD,                    
+    //             }); 
+    //             const contract =await new ethers.Contract(window.sessionStorage.getItem("cAddress"), clientContract, provider); 
+    //             const data=await contract.getSpecificCharger1(window.sessionStorage.getItem("cIndex")).then((res)=>{  
+    //                 // console.log(res);    
+    //                 setContData(res);                
+    //             })  
+    //             const details=await contract.getDetails().then((res)=>{
+    //                 setMId(res[3]);
+    //             })  
+    //             const contract2 =await new ethers.Contract(masteraddress, masterABI, provider); 
+    //             const data2=await contract2.viewUser(window.sessionStorage.getItem("userID")).then((res)=>{
+    //                 // console.log(res)
+    //                 if(res[1]==="0x0000000000000000000000000000000000000000"){
+    //                     setWalletData(res);
+    //                 }else{                        
+    //                     setWalletData(res);
                         
-                    }
-                })
-                const config  = {headers: {
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                }}
-                axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&ids=ethereum&order=market_cap_desc&per_page=100&page=1&sparkline=false',config)
-                .then(function (response) {                         
-                        console.log(response.data[0].current_price);    
-                        setCoinValue(response.data[0].current_price);                
-                })
-                .catch(function (error) {
-                    alert("error");
-                });
+    //                 }
+    //             })
+    //             const config  = {headers: {
+    //                 'Content-Type': 'application/json',
+    //                 "Access-Control-Allow-Origin": "*",
+    //                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    //             }}
+    //             axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&ids=ethereum&order=market_cap_desc&per_page=100&page=1&sparkline=false',config)
+    //             .then(function (response) {                         
+    //                     console.log(response.data[0].current_price);    
+    //                     setCoinValue(response.data[0].current_price);                
+    //             })
+    //             .catch(function (error) {
+    //                 alert("error");
+    //             });
 
-        })();
-    }, [])
+    //     })();
+    // }, [])
 
-    const handlerQuickSim=async(event)=>{
-        event.preventDefault();
-        let data;
-        //set random initial charge percentage...
-        const initial =Math.floor(Math.random() * (parseInt(percentageChargeLimit)-20 - 20 + 1) + 20);        
-        setInitialCharge(initial);
-        setCurrentChargeLevel(initial);
-        console.log(initial);
+    // const handlerQuickSim=async(event)=>{
+    //     event.preventDefault();
+    //     let data;
+    //     //set random initial charge percentage...
+    //     const initial =Math.floor(Math.random() * (parseInt(percentageChargeLimit)-20 - 20 + 1) + 20);        
+    //     setInitialCharge(initial);
+    //     setCurrentChargeLevel(initial);
+    //     console.log(initial);
         
-        //calculating INR on wallet
-        console.log("INR in wallet: "+ethers.utils.formatEther(walletData[3])*coinValue);                
-        setCashonWalletINR(ethers.utils.formatEther(walletData[3])*coinValue);
+    //     //calculating INR on wallet
+    //     console.log("INR in wallet: "+ethers.utils.formatEther(walletData[3])*coinValue);                
+    //     setCashonWalletINR(ethers.utils.formatEther(walletData[3])*coinValue);
 
-        //calculating the maximum possible kwh chargeable..
+    //     //calculating the maximum possible kwh chargeable..
 
 
-        //calculating maximum kwH needed to charge..
-        let neededCharge = ( parseInt(percentageChargeLimit)-initial )* carData.battery /100;
-        console.log(neededCharge);
-        //check for charging with amount/charge
-        if(neededCharge*ethers.BigNumber.from(contData[5]).toNumber() <= ethers.utils.formatEther(walletData[3])*coinValue){
-            console.log("chargeable"+neededCharge*ethers.BigNumber.from(contData[5]).toNumber() );    
+    //     //calculating maximum kwH needed to charge..
+    //     let neededCharge = ( parseInt(percentageChargeLimit)-initial )* carData.battery /100;
+    //     console.log(neededCharge);
+    //     //check for charging with amount/charge
+    //     if(neededCharge*ethers.BigNumber.from(contData[5]).toNumber() <= ethers.utils.formatEther(walletData[3])*coinValue){
+    //         console.log("chargeable"+neededCharge*ethers.BigNumber.from(contData[5]).toNumber() );    
             
-            //set the master control data prop
-            data={
-                quick:true,
-                fullCharge: true,
-                chargingUnits: neededCharge,
-                chargeableAmount: neededCharge*ethers.BigNumber.from(contData[5]).toNumber(),
-                chargeableinEth: neededCharge*ethers.BigNumber.from(contData[5]).toNumber() /coinValue,
-                startingPercentage:initial,
-                stopPercentage:parseInt(percentageChargeLimit)
-            }            
-            console.log(data);
-            setChargingMaster(data);
+    //         //set the master control data prop
+    //         data={
+    //             quick:true,
+    //             fullCharge: true,
+    //             chargingUnits: neededCharge,
+    //             chargeableAmount: neededCharge*ethers.BigNumber.from(contData[5]).toNumber(),
+    //             chargeableinEth: neededCharge*ethers.BigNumber.from(contData[5]).toNumber() /coinValue,
+    //             startingPercentage:initial,
+    //             stopPercentage:parseInt(percentageChargeLimit)
+    //         }            
+    //         console.log(data);
+    //         setChargingMaster(data);
 
-        }else{
-            //charge till possible
-            let limitChargeKwH= ethers.utils.formatEther(walletData[3])*coinValue / ethers.BigNumber.from(contData[5]).toNumber();
-            let initialKwH=initial /100 * carData.battery;
-            let finalPercentage= limitChargeKwH  + initialKwH;
+    //     }else{
+    //         //charge till possible
+    //         let limitChargeKwH= ethers.utils.formatEther(walletData[3])*coinValue / ethers.BigNumber.from(contData[5]).toNumber();
+    //         let initialKwH=initial /100 * carData.battery;
+    //         let finalPercentage= limitChargeKwH  + initialKwH;
 
-            //set the master control data prop
-            data={
-                quick:true,
-                fullCharge: false,
-                chargingUnits: limitChargeKwH,
-                chargeableAmount: ethers.utils.formatEther(walletData[3])*coinValue,
-                chargeableinEth: ethers.utils.formatEther(walletData[3]),
-                startingPercentage:initial,
-                stopPercentage:finalPercentage        
-            }
-            console.log(data);
-            setChargingMaster(data);
-        }
-        setQuickPage(2);
-        const myTimeout = setTimeout(function(){simulate("quick",data)}, 3000);
+    //         //set the master control data prop
+    //         data={
+    //             quick:true,
+    //             fullCharge: false,
+    //             chargingUnits: limitChargeKwH,
+    //             chargeableAmount: ethers.utils.formatEther(walletData[3])*coinValue,
+    //             chargeableinEth: ethers.utils.formatEther(walletData[3]),
+    //             startingPercentage:initial,
+    //             stopPercentage:finalPercentage        
+    //         }
+    //         console.log(data);
+    //         setChargingMaster(data);
+    //     }
+    //     setQuickPage(2);
+    //     const myTimeout = setTimeout(function(){simulate("quick",data)}, 3000);
         
-    }
+    // }
 
-    const simulate=async(type,data)=>{        
-        let chargeLevel=data.startingPercentage;
-        if(type==="quick"){      
-            const provider =new ethers.providers.Web3Provider(window.ethereum) 
-            const signer=provider.getSigner();  
-            const contract2 =await new ethers.Contract(masteraddress, masterABI, signer); 
-            const data2=await contract2.ActivateCharger(window.sessionStorage.getItem("userID"),window.sessionStorage.getItem("cAddress"),window.sessionStorage.getItem("cIndex"),1).then((res)=>{
-                    for(var i=0;i<(data.stopPercentage - data.startingPercentage);i++){
-                        setTimeout(function() {
-                            chargeLevel+=1;
-                            setCurrentChargeLevel(chargeLevel);       
-                            // console.log(chargeLevel);       
+    // const simulate=async(type,data)=>{        
+    //     let chargeLevel=data.startingPercentage;
+    //     if(type==="quick"){      
+    //         const provider =new ethers.providers.Web3Provider(window.ethereum) 
+    //         const signer=provider.getSigner();  
+    //         const contract2 =await new ethers.Contract(masteraddress, masterABI, signer); 
+    //         const data2=await contract2.ActivateCharger(window.sessionStorage.getItem("userID"),window.sessionStorage.getItem("cAddress"),window.sessionStorage.getItem("cIndex"),1).then((res)=>{
+    //                 for(var i=0;i<(data.stopPercentage - data.startingPercentage);i++){
+    //                     setTimeout(function() {
+    //                         chargeLevel+=1;
+    //                         setCurrentChargeLevel(chargeLevel);       
+    //                         // console.log(chargeLevel);       
         
-                            if(chargeLevel == data.stopPercentage){
-                                console.log("completed");
-                                // start billing here
-                                initiateBill(data);
-                              }      
+    //                         if(chargeLevel == data.stopPercentage){
+    //                             console.log("completed");
+    //                             // start billing here
+    //                             initiateBill(data);
+    //                           }      
         
-                          }, 2000*i);                                    
-                    }
-                })
+    //                       }, 2000*i);                                    
+    //                 }
+    //             })
                                    
-        }else{
+    //     }else{
 
-        }
-    }
-    const initiateBill=async(data)=>{     
-        const timestamp = ""+Date.now();               
-        const provider =new ethers.providers.Web3Provider(window.ethereum) 
-        const signer=provider.getSigner();  
-        const contract2 =await new ethers.Contract(masteraddress, masterABI, signer);
-        const data2=await contract2.DeactivateCharger(window.sessionStorage.getItem("userID"),mId,window.sessionStorage.getItem("cAddress"),window.sessionStorage.getItem("cIndex"),ethers.utils.parseUnits(""+data.chargeableinEth, "ether"),timestamp).then((res)=>{
-            alert("payment is being processed");
-            setQuickPage(1);
-        })
-        //yet to be completed...
+    //     }
+    // }
 
-    }
+    // const initiateBill=async(data)=>{     
+    //     const timestamp = ""+Date.now();               
+    //     const provider =new ethers.providers.Web3Provider(window.ethereum) 
+    //     const signer=provider.getSigner();  
+    //     const contract2 =await new ethers.Contract(masteraddress, masterABI, signer);
+    //     const data2=await contract2.DeactivateCharger(window.sessionStorage.getItem("userID"),mId,window.sessionStorage.getItem("cAddress"),window.sessionStorage.getItem("cIndex"),ethers.utils.parseUnits(""+data.chargeableinEth, "ether"),timestamp).then((res)=>{
+    //         alert("payment is being processed");
+    //         setQuickPage(1);
+    //     })
+    //     //yet to be completed...
+
+    // }
 
     const setCar=(val)=>{          
         var data;     
@@ -215,7 +216,7 @@ const Simulator=()=>{
     return(
         <div>
             <nav className="navbar navbar-primary bg-primary py-2 px-3 mb-0"  style={{borderBottom:"1px solid #eee"}}>
-                <h1 className="font-1 text-light">Easy Charge</h1>
+                <h1 className="font-1 text-light">THE-GRID</h1>
                 <div className='ml-auto font-3'>                       
                     <span 
                         className=" text-light fw-bold"
@@ -249,7 +250,7 @@ const Simulator=()=>{
                 <hr/>
                 <div className='overflw-x mt-4'>
                     <h3 className='text-center text-success font-3 fw-bold mb-3'>RTS -   Real Time Simulator</h3>
-                    <p className='text-center text-secondary font-4'>This simulates individual chargers in the Grid.</p>
+                    <p className='text-center text-secondary font-4'>This simulates individual chargers in THE-GRID.</p>
                     {
                         contData?
                             <div className='text-center mt-2'>
@@ -374,7 +375,7 @@ const Simulator=()=>{
             <footer className="bg-primary py-5 mt-5">
                 <div className="container">
                     <p className='text-center font-3 text-light'>Made with ❤️ in INDIA</p>
-                    <div className="small text-center text-light font-4">Copyright © Then, Now & Forever - Easy Charge</div>
+                    <div className="small text-center text-light font-4">Copyright © Then, Now & Forever - THE-GRID</div>
                 </div>
             </footer>
                             

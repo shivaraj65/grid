@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import {useParams} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import { ethers } from "ethers";
-import {masteraddress,masterABI,clientContract} from '../../assets/keys/master';
-import {REACT_APP_NODE_ENDPOINT,REACT_APP_NODE_USERNAME,REACT_APP_NODE_PASSWORD} from '../../assets/keys/nodeRPC';
+// import {masteraddress,masterABI,clientContract} from '../../assets/keys/master';
+// import {REACT_APP_NODE_ENDPOINT,REACT_APP_NODE_USERNAME,REACT_APP_NODE_PASSWORD} from '../../assets/keys/nodeRPC';
 import Map from "mapmyindia-react";
 import axios from 'axios';
 import './dashboard.css';
@@ -53,7 +53,7 @@ const Dash=()=>{
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         }}
         if(city!=="0" && city!==""){
-            axios.post('http://localhost:3001/getchargerz', JSON.stringify({city:city}),config).then(function (response) {              
+            axios.post('https://grid-server-a1tv.onrender.com/getchargerz', JSON.stringify({city:city}),config).then(function (response) {              
             if(response.data.status==="success"){
                 console.log(response.data.message); 
                 setChargerData(response.data.message); 
@@ -96,12 +96,14 @@ const Dash=()=>{
         (async()=>{
             var data2=[];
             if(chargerData!==null){   
-                // const provider =new ethers.providers.Web3Provider(window.ethereum)             
-                let provider = new ethers.providers.JsonRpcProvider({
-                    url: REACT_APP_NODE_ENDPOINT,
-                    user: REACT_APP_NODE_USERNAME,
-                    password: REACT_APP_NODE_PASSWORD,                    
-                }); 
+                // const provider =new ethers.providers.Web3Provider(window.ethereum)      
+
+                // let provider = new ethers.providers.JsonRpcProvider({
+                //     url: REACT_APP_NODE_ENDPOINT,
+                //     user: REACT_APP_NODE_USERNAME,
+                //     password: REACT_APP_NODE_PASSWORD,                    
+                // }); 
+
                 // headers:{
                     //     "Access-Control-Allow-Origin" : "http://localhost:3000" ,                       
                     //     "Access-Control-Allow-Methods":  "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -121,13 +123,13 @@ const Dash=()=>{
                     // "Access-Control-Allow-Origin": "*",
                     // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 // }
-                for(var i=0;i<chargerData.length;i++){                    
-                    console.log(chargerData[i].contractAddress);
-                    const contract =await new ethers.Contract(chargerData[i].contractAddress, clientContract, provider); 
-                    const data=await contract.getSpecificCharger1(chargerData[i].indexLocation).then((res)=>{  
-                        console.log(res);
-                        data2.push(res);
-                    })
+                // for(var i=0;i<chargerData.length;i++){                    
+                //     console.log(chargerData[i].contractAddress);
+                //     const contract =await new ethers.Contract(chargerData[i].contractAddress, clientContract, provider); 
+                //     const data=await contract.getSpecificCharger1(chargerData[i].indexLocation).then((res)=>{  
+                //         console.log(res);
+                //         data2.push(res);
+                //     })
 
                     // const config  = {headers: {
                     //     'Content-Type': 'application/json',
@@ -142,8 +144,8 @@ const Dash=()=>{
                     //     }
                     //     })
 
-                }     
-                setChargerContractData(data2);            
+                // }     
+                // setChargerContractData(data2);            
             }            
         })();
     }, [chargerData])
@@ -167,7 +169,7 @@ const Dash=()=>{
     return(
         <div>
             <nav className="navbar navbar-primary bg-primary py-2 px-3 mb-0"  style={{borderBottom:"1px solid #eee"}}>
-                <h1 className="font-1 text-light">Easy Charge</h1>
+                <h1 className="font-1 text-light">THE-GRID</h1>
                 <div className='ml-auto font-3'>                       
                     {/* <span 
                         className=" text-light fw-bold"
@@ -310,7 +312,7 @@ const Dash=()=>{
             <footer className="bg-primary py-5 mt-5">
                 <div className="container">
                     <p className='text-center font-3 text-light'>Made with ❤️ in INDIA</p>
-                    <div className="small text-center text-light font-4">Copyright © Then, Now & Forever - Easy Charge</div>
+                    <div className="small text-center text-light font-4">Copyright © Then, Now & Forever - THE-GRID</div>
                 </div>
             </footer>
 
@@ -324,7 +326,7 @@ const Dash=()=>{
                 className='my-modal-01'
                 >
                 <Modal.Header>
-                <Modal.Title><span className='text-primary font-1 display-4'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='text-primary font-1 display-4'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <h5 className='font-3 mb-3 text-center'>Connect your wallet to explore!</h5>

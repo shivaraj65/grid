@@ -31,7 +31,7 @@ const Security =()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } }
-        axios.post('http://localhost:3001/getuser', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/getuser', JSON.stringify(json),config)
         .then(function (response) {                  
             if(response.data.status==="success"){                   
                setData(response.data.message);
@@ -50,7 +50,7 @@ const Security =()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } }
-        axios.post('http://localhost:3001/totpSet', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/totpSet', JSON.stringify(json),config)
             .then(function (response) {                  
                 if(response.data.status==="error"){                   
                     setPage(3);
@@ -79,7 +79,7 @@ const Security =()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } }
-        axios.post('http://localhost:3001/tokenVerify  ', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/tokenVerify  ', JSON.stringify(json),config)
                 .then(function (response) { 
                     if(response.data.status==="error"){
                         setPopupContent(response.data.message);
@@ -144,7 +144,7 @@ const Security =()=>{
                 centered                
                 >
                 <Modal.Header>
-                <Modal.Title><span className='font-1 display-5 text-primary'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='font-1 display-5 text-primary'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body> 
                     {page===1?

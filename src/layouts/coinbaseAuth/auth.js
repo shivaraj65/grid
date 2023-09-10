@@ -71,7 +71,7 @@ const Auth=()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } } 
-        axios.post('http://localhost:3001/coinbaseauth', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/coinbaseauth', JSON.stringify(json),config)
             .then(function (response) {                  
                 if(response.data.status==="error"){                   
                     setPopupContent(response.data.message);
@@ -98,7 +98,7 @@ const Auth=()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } } 
-        axios.post('http://localhost:3001/getuser', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/getuser', JSON.stringify(json),config)
             .then(function (response) {                  
                 if(response.data.status==="error"){                   
                     // setPopupContent(response.data.message);
@@ -142,7 +142,7 @@ const Auth=()=>{
                 centered                
                 >
                 <Modal.Header>
-                <Modal.Title><span className='font-1 display-4 text-primary'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='font-1 display-4 text-primary'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p className='text-center font-4 fw-bold'>{popupContent}</p>

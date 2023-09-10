@@ -14,7 +14,7 @@ const Redirecter =()=>{
                 'Access-Control-Allow-Origin':'*',
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         }}
-        axios.post('http://localhost:3001/changeVerification', 
+        axios.post('https://grid-server-a1tv.onrender.com/changeVerification', 
         JSON.stringify(formData),config)
         .then(function (response) {
             console.log(response.data);

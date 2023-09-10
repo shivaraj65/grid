@@ -200,7 +200,7 @@ const Grid =()=>{
                 lat:lat
             }
             // console.log(json);
-            axios.post('http://localhost:3001/setcharger', JSON.stringify(json),config).then(function (response) {              
+            axios.post('https://grid-server-a1tv.onrender.com/setcharger', JSON.stringify(json),config).then(function (response) {              
                 if(response.data.status==="success"){
                     console.log("ok");              
                 }else{
@@ -255,7 +255,7 @@ const Grid =()=>{
                 index:prefillIndex,
                 status :status
             }
-            axios.post('http://localhost:3001/setcstatus', JSON.stringify(json),config).then(function (response) {              
+            axios.post('https://grid-server-a1tv.onrender.com/setcstatus', JSON.stringify(json),config).then(function (response) {              
                 if(response.data.status==="success"){
                     console.log("ok");              
                 }else{
@@ -278,7 +278,7 @@ const Grid =()=>{
             <hr/>
             {page===1?
                 <div className='text-center py-4'>
-                    <h4 className='font-4 text-warning fw-bold mb-3'>Get your charging station on the grid with few easy steps.</h4>
+                    <h4 className='font-4 text-warning fw-bold mb-3'>Get your charging station on THE-GRID with few easy steps.</h4>
                     <button 
                         className='btn btn-dark shadow fw-bold font-3 mb-5'
                         onClick={()=>{
@@ -288,8 +288,8 @@ const Grid =()=>{
                     <hr/>
                     <p className=' font-4 fw-bold text-dark'>Getting started is as <span className='text-primary'>EASY</span> as</p>
                     <p className=' font-3 fw-bold text-secondary'>1. Create an service provider contract with the system.</p>
-                    <p className='font-3 fw-bold text-secondary '>2. Add your charging station to the GRID. </p>
-                    <p className='font-3 fw-bold text-secondary '>Start earning with the GRID.</p>
+                    <p className='font-3 fw-bold text-secondary '>2. Add your charging station to THE-GRID. </p>
+                    <p className='font-3 fw-bold text-secondary '>Start earning with THE-GRID.</p>
                 </div>
                 
                 :null
@@ -387,13 +387,13 @@ const Grid =()=>{
                 centered
                 >
                 <Modal.Header>
-                <Modal.Title><span className='text-primary font-1 display-4'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='text-primary font-1 display-4'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="py-2" onSubmit={gridInit}>                      
                         <div>                 
                         <div className="form-group">                                        
-                            <label htmlFor="n1" className='text-dark font-4 fw-normal mb-2'>Name of your charging network on the GRID :</label>
+                            <label htmlFor="n1" className='text-dark font-4 fw-normal mb-2'>Name of your charging network on THE-GRID :</label>
                             <input 
                                 type="text"
                                 name="n1" 
@@ -477,7 +477,7 @@ const Grid =()=>{
                 centered
                 >
                 <Modal.Header>
-                <Modal.Title><span className='text-primary font-1 display-4'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='text-primary font-1 display-4'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="py-2 " onSubmit={launchCharger}>
@@ -634,7 +634,7 @@ const Grid =()=>{
                 centered
                 >
                 <Modal.Header>
-                <Modal.Title><span className='text-primary font-1 display-4'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='text-primary font-1 display-4'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="py-2" onSubmit={updater}>                       

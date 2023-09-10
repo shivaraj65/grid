@@ -26,7 +26,7 @@ const Profile=()=>{
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         } }
-        axios.post('http://localhost:3001/getuser', JSON.stringify(json),config)
+        axios.post('https://grid-server-a1tv.onrender.com/getuser', JSON.stringify(json),config)
         .then(function (response) {                  
             if(response.data.status==="success"){                   
                setUserData(response.data.message);
@@ -43,7 +43,7 @@ const Profile=()=>{
     return(
         <div>
             <nav className="navbar navbar-primary bg-primary py-2 px-3" >
-                <h1 className="font-1 text-light">Easy Charge</h1>
+                <h1 className="font-1 text-light">THE-GRID</h1>
                 <div className='ml-auto font-3'>
                     {/* <span className="text-light fw-bold">contact</span> */}
                     <span 

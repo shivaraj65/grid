@@ -171,7 +171,7 @@ const Wallet =({data})=>{
                 centered
                 >
                 <Modal.Header>
-                <Modal.Title><span className='text-primary font-1 display-4'>Easy Charge</span></Modal.Title>
+                <Modal.Title><span className='text-primary font-1 display-4'>THE-GRID</span></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {modalSelecter===0?
